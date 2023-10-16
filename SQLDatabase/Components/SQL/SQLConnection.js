@@ -1,4 +1,4 @@
-var mysql = required("mysql");
+var mysql = require("mysql2");
 console.log("Getting connection......");
 
 var conn = mysql.createConnection({
