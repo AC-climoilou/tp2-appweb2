@@ -1,0 +1,15 @@
+CREATE TABLE event (
+	event_id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    name VARCHAR(16) NOT NULL,
+    eDate DATE NOT NULL
+);
+
+CREATE TABLE client (
+	client_id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    username VARCHAR(24) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    id_event INT,
+    CONSTRAINT fk_client_event FOREIGN KEY (id_event)
+		REFERENCES event(event_id)
+        ON DELETE CASCADE
+);
