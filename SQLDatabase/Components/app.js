@@ -43,6 +43,7 @@ var db = mysql.createConnection({
 });
 
 
+//Permet d'Ajouter un evenement en l'envoiyant sous form de json
 app.post("/addEvent", (req, res) => {
   const eventName = req.body.eventName;
   const eventDate = req.body.eventDate;
@@ -53,6 +54,39 @@ app.post("/addEvent", (req, res) => {
 
     res.end();
   });
+
+  //Envoie tout les elements sous la forme de json
+app.get("/getEvents", (req, res) =>
+  {
+      let err;
+      let field;
+
+      db.query("SELECT * FROM event", (err, result) => 
+        {
+            if(err)
+            {
+              res.send({err : err}) 
+            } 
+            else 
+            {
+              res.send(result);
+            }
+        }
+      ); 
+  }
+);
+
+//Efface un evenement dont on envoi l'id 
+app.delete(
+ "/deleteEvent", (req, res) =>
+  {
+      const id = req.body.id;
+      db.query("DELETE FROM event WHERE event_id = " + id);
+      res.end()
+  }
+);
+
+
 /*
 app.get("/login", (req, res) => {
   if (req.session.user) {
