@@ -1,13 +1,24 @@
-import React from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
 import "./App.css";
+import Accueil from "./pages/Accueil";
+import Calendrier from "./pages/Calendrier";
 import Registration from "./pages/Registration";
+import { BrowserRouter, Routes, Route} from "react-router-dom";
 
 function App() {
   return (
-    <Router>
-      <Route path="/registration" exact component={Registration} />
-    </Router>
+    <BrowserRouter>
+      <div className="App">
+
+        <Navbar/>
+
+        <Routes>
+          <Route exact path="/" element={<Registration />} />
+          <Route path="/accueil" element={<Accueil />} />
+          <Route path="/calendrier" element={<Calendrier />} />
+        </Routes>
+
+      </div>
+    </BrowserRouter>
   );
 }
 
