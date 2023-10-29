@@ -44,6 +44,10 @@ var db = mysql.createConnection({
 
 
 //Permet d'Ajouter un evenement en l'envoiyant sous form de json
+//A envoyer
+//Client_id number
+//name string
+//eDate string representant une date
 app.post("/addEvent", (req, res) => {
   const eventName = req.body.name;
   const eventDate = req.body.eDate;
@@ -87,21 +91,38 @@ app.delete(
   }
 );
 
+//Pour creer un utilisateur
 app.post(
   "/addUser", (req, res) => 
   {
       const username = req.body.username;
       const password = req.body.password;
 
-      bcrypt.hash(password, saltRounds,  (err, hash) =>   
-      {
+      //Pour verifier que le username 
+      db.query("SELECT * FROM client WHERE username = '" + username + "' ;" , 
+      (err, resQuery ) => {
         if(err)
         {
-            res.send("Erreur d'encryption du mot de passe")
+          console.log(err);
+          res.send("Erreur sql");
+          res.end();
         }
 
-        db.query("INSERT INTO client (username, password) VALUES ( '" +  username + "' , '"   + hash + ");");
-        res.end();
+        console.log(resQuery);
+
+          bcrypt.hash(password, saltRounds,  (err, hash) => 
+          {
+            if(err)
+            {
+              console.log(err);
+                res.send("Erreur d'encryption du mot de passe");
+            }
+    
+            db.query("INSERT INTO client (username, password) VALUES ( '" +  username + "' , '"   + hash + ");");
+
+            res.end();
+          }
+        );
       }
       );
   }
