@@ -3,10 +3,12 @@ import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import allLocales from '@fullcalendar/core/locales-all';
 
+
 class Calendrier extends Component {
     render() {
         return (
             <div>
+                <button>Ajouter Event</button>
                 <FullCalendar 
                     plugins={[ dayGridPlugin ]} 
                     initialView="dayGridMonth"
