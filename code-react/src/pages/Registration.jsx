@@ -47,7 +47,7 @@ class Registration extends Component {
   }
 
   register = () => {
-    Axios.post("http://localhost:3001/register", {
+    Axios.post("http://localhost:3001/addUser", {
       username: this.state.usernameReg,
       password: this.state.passwordReg,
     }).then((response) => {
