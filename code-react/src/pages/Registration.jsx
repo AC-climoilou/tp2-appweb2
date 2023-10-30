@@ -1,10 +1,10 @@
-import React from "react";
+import React, { Component } from 'react';
 import Axios from "axios";
 import "../App.css";
 
 Axios.defaults.withCredentials = true;
 
-class Registration extends React.Component {
+class Registration extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -47,7 +47,7 @@ class Registration extends React.Component {
   }
 
   register = () => {
-    Axios.post("http://localhost:3001/register", {
+    Axios.post("http://localhost:3001/addUser", {
       username: this.state.usernameReg,
       password: this.state.passwordReg,
     }).then((response) => {
@@ -82,39 +82,53 @@ class Registration extends React.Component {
       <div className="App">
         <div className="registration">
           <h1>Registration</h1>
-          <label>Username</label>
-          <input
-            type="text"
-            onChange={(e) => {
-              this.setUsernameReg(e.target.value);
-            }}
-          />
-          <label>Password</label>
-          <input
-            type="text"
-            onChange={(e) => {
-              this.setPasswordReg(e.target.value);
-            }}
-          />
+
+          <div>
+            <input
+              type="text"
+              placeholder="Username..."
+              onChange={(e) => {
+                this.setUsernameReg(e.target.value);
+              }}
+            />
+          </div>
+
+          <div>
+            <input
+              type="text"
+              placeholder="Password..."
+              onChange={(e) => {
+                this.setPasswordReg(e.target.value);
+              }}
+            />
+          </div>
+
           <button onClick={this.register}> Register </button>
         </div>
 
         <div className="login">
           <h1>Login</h1>
-          <input
+
+          <div>
+            <input
             type="text"
             placeholder="Username..."
             onChange={(e) => {
               this.setUsername(e.target.value);
             }}
-          />
-          <input
-            type="password"
-            placeholder="Password..."
-            onChange={(e) => {
-              this.setPassword(e.target.value);
-            }}
-          />
+            />
+          </div>
+          
+          <div>
+            <input
+              type="password"
+              placeholder="Password..."
+              onChange={(e) => {
+                this.setPassword(e.target.value);
+              }}
+            />
+          </div>
+          
           <button onClick={this.login}> Login </button>
           <button onClick={this.getLogin}> Get </button>
         </div>
