@@ -9,7 +9,6 @@ class Navbar extends Component {
                     <li><NavLink to="/">Connexion</NavLink></li>
                     <li><NavLink to="/accueil/">Accueil</NavLink></li>
                     <li><NavLink to="/calendrier/">Calendrier</NavLink></li>
-                    <li><NavLink to="/addEvent/">TestAddEvent</NavLink></li>
                 </ul>
             </nav>
         );

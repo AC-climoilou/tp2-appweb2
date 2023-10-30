@@ -5,10 +5,15 @@ import allLocales from '@fullcalendar/core/locales-all';
 
 
 class Calendrier extends Component {
+
+    loadAddEventPage() {
+        window.location.assign("http://localhost:3000/addEvent/");
+    }
+
     render() {
         return (
             <div>
-                <button>Ajouter Event</button>
+                <button onClick={this.loadAddEventPage}>Ajouter Event</button>
                 <FullCalendar 
                     plugins={[ dayGridPlugin ]} 
                     initialView="dayGridMonth"

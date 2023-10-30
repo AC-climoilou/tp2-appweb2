@@ -19,7 +19,7 @@ function AddEvent(props) {
                 jsonObject[key] = value;
             });
 
-            axios.post("http://127.0.0.1:3001/addEvent", jsonObject)
+            axios.post("127.0.0.1:3001/addEvent", jsonObject)
                 .then(response => {
                     console.log('Event added:', response.data);
                 })
@@ -28,7 +28,7 @@ function AddEvent(props) {
                 });
         } else {
             //Si data non valide
-
+            
         }
     }
 
