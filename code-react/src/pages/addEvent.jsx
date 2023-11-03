@@ -1,17 +1,25 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 
-function AddEvent(props) {
+function AddEvent() {
 
     const [title, setTitle] = useState("");
     const [date, setDate] = useState(null);
+    const [userID, setUserID] = useState(null);
+
+    const loadUserID = () => {
+        var search = window.location.search;
+        var params = new URLSearchParams(search);
+        setUserID(params.get('id'));
+    }
 
     const sendEventBD = () => {
+        loadUserID();
         if (title !== "" && date !== null) {
             const bodyFormData = new FormData();
             bodyFormData.append("name", title);
             bodyFormData.append("eDate", date);
-            bodyFormData.append("client_id", props.id);
+            bodyFormData.append("client_id", userID);
 
             // Convert FormData to JSON
             let jsonObject = {};
@@ -19,7 +27,7 @@ function AddEvent(props) {
                 jsonObject[key] = value;
             });
 
-            axios.post("127.0.0.1:3001/addEvent", jsonObject)
+            axios.post("http://localhoste:3001/addEvent", jsonObject)
                 .then(response => {
                     console.log('Event added:', response.data);
                 })

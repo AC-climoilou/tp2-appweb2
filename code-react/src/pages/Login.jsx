@@ -4,7 +4,7 @@ import "../App.css";
 
 Axios.defaults.withCredentials = true;
 
-class Registration extends Component {
+class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -16,15 +16,15 @@ class Registration extends Component {
     };
   }
 
-  setUsernameReg = (data) => {
+  setUsername = (data) => {
     this.setState({
-      usernameReg: data
+      username: data
     })
   }
 
-  setPasswordReg = (data) => {
+  setPassword = (data) => {
     this.setState({
-      passwordReg: data
+      password: data
     })
   }
 
@@ -34,43 +34,31 @@ class Registration extends Component {
     })
   }
 
-  register = () => {
-    Axios.post("http://localhost:3001/addUser", {
-      username: this.state.usernameReg,
-      password: this.state.passwordReg,
+  login = () => {
+    Axios.post("http://localhost:3001/login", {
+      username: this.state.username,
+      password: this.state.password,
     }).then((response) => {
-      console.log(response);
+      if (response.data.message) {
+        this.setLoginStatus(response.data.message);
+      } else {
+        this.setLoginStatus(response.data[0].username);
+      }
     });
   };
+
+  // a tous les rafraichissement de page
+  getLogin = () => {
+    Axios.get("http://localhost:3001/login").then((response) => {
+      if (response.data.loggedIn === true) {
+        this.setLoginStatus(response.data.user[0].username);
+      }
+    });
+  }
 
   render() {
     return (
       <div className="App">
-        <div className="registration">
-          <h1>Registration</h1>
-
-          <div>
-            <input
-              type="text"
-              placeholder="Username..."
-              onChange={(e) => {
-                this.setUsernameReg(e.target.value);
-              }}
-            />
-          </div>
-
-          <div>
-            <input
-              type="text"
-              placeholder="Password..."
-              onChange={(e) => {
-                this.setPasswordReg(e.target.value);
-              }}
-            />
-          </div>
-
-          <button onClick={this.register}> Register </button>
-        </div>
         <div className="login">
           <h1>Login</h1>
 
@@ -96,11 +84,11 @@ class Registration extends Component {
           
           <button onClick={this.login}> Login </button>
           <button onClick={this.getLogin}> Get </button>
-          
         </div>
+
         <h1>{this.state.loginStatus}</h1>
       </div>
     );
   }
 }
-export default Registration;
+export default Login;
