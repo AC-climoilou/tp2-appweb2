@@ -131,6 +131,7 @@ class Registration extends Component {
           
           <button onClick={this.login}> Login </button>
           <button onClick={this.getLogin}> Get </button>
+          
         </div>
 
         <h1>{this.state.loginStatus}</h1>

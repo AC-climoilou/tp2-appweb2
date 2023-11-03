@@ -100,7 +100,7 @@ app.post(
       const username = req.body.username;
       const password = req.body.password;
 
-      //Pour verifier que le username 
+      //Pour verifier que le username n'est pas deja utiliser
       db.query("SELECT COUNT(*) as nbMemeUsername FROM client WHERE username = '" + username + "' ;" , 
       (err, resQuery ) => {
         if(err)
@@ -111,14 +111,15 @@ app.post(
         }
           bcrypt.hash(password, saltRounds,  (err, hash) => 
           {
-            console.log(resQuery);
             if(err)
             {
-               res.send("Erreur d'encryption du mot de passe");
+              let messageErreur = "Erreur de hashage du mot de passe";
+              res.send(messageErreur);
             }
             else if(resQuery[0].nbMemeUsername > 0)
             {
-               res.send("Il y a deja un utilisateur avec ce nom");
+              let messageErreur = "Il y a deja un utilisateur avec ce nom"; 
+              res.send(messageErreur);
             }
             else
             {
@@ -142,17 +143,20 @@ app.get("/login", (req, res) => {
 });
 
 app.post("/login", (req, res) => {
-  const name = req.body.name;
-  const eDate = req.body.date;
+  const username = req.body.username;
+  const password = req.body.password;
+
+  console.log(req);
 
   db.query(
-    "SELECT * FROM users WHERE username = ?;",
+    "SELECT * FROM client WHERE username = ?;",
     username,
     (err, result) => {
       if (err) {
         res.send({ err: err });
       }
 
+      console.log(result);
       if (result.length > 0) 
       {
         bcrypt.compare(password, result[0].password, (error, response) => {
