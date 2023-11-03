@@ -7,7 +7,9 @@ import allLocales from '@fullcalendar/core/locales-all';
 class Calendrier extends Component {
 
     loadAddEventPage() {
-        window.location.assign("http://localhost:3000/addEvent/");
+        //window.location.assign("http://localhost:3000/addEvent/");
+        var id = 1;
+        window.location.href = `http://localhost:3000/addEvent/?id=${id}`;
     }
 
     render() {
