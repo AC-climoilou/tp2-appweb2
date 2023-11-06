@@ -20,6 +20,7 @@ function App() {
           <Route exact path="/" element={<Accueil />} />
           <Route exact path="/calendrier" element={<Calendrier />} />
           <Route exact path="/addEvent" element={<AddEvent />} />
+          <Route exact path="/deleteEvent" element={<AddEvent />} />
         </Routes>
 
       </div>
