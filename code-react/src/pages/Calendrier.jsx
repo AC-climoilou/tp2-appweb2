@@ -10,7 +10,7 @@ class Calendrier extends Component {
 
     loadAddEventPage() {
         //remplacer id = 1 par l'id du login
-        var id = 19;
+        var id = 16;
         window.location.href = `http://localhost:3000/addEvent/?id=${id}`;
     }
 

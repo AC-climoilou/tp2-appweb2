@@ -17,7 +17,7 @@ function AddEvent() {
 
     const sendEventBD = () => {
         loadUserID();
-        if (title !== "" && date !== null) {
+        if (title !== "" && date !== null && userID !== null) {
 
             let json = {
                 name: title,
