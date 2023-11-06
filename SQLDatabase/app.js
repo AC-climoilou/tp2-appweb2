@@ -77,7 +77,7 @@ app.post("/addEvent", (req, res) => {
 //Envoie tout les elements sous la forme de json
 app.get("/getEvents", (req, res) =>
   {
-    if(req.session.user)
+    if(req.session.authenticated &&( req.session.user.userId == sessionId))
     {
       let err;
       let field;
@@ -103,6 +103,8 @@ app.get("/getEvents", (req, res) =>
 app.delete(
  "/deleteEvent", (req, res) =>
   {
+    if(req.session.authenticated &&( req.session.user.userId == sessionId))
+     {   
       const id = req.body.id;
       db.query("DELETE FROM event WHERE event_id = " + id);
 
@@ -112,6 +114,7 @@ app.delete(
       }
       res.send(req.session);
       res.end();
+    }
   }
 );
 
