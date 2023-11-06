@@ -10,6 +10,9 @@ class Calendrier extends Component {
         this.state = {
             allEvents: []
         };
+        this.loadEvents = this.loadEvents.bind(this);
+        this.loadAddEventPage = this.loadAddEventPage.bind(this);
+        this.loadDeleteEventPage = this.loadDeleteEventPage.bind(this);
       }
 
     loadAddEventPage() {
@@ -29,9 +32,9 @@ class Calendrier extends Component {
             for (var i in data) {
                 table.push(i, data[i]);
             }
-        })
-        this.setState({
+            this.setState({
             allEvents: table
+            })
         })
         console.log(this.state.allEvents);
     }
