@@ -73,7 +73,7 @@ app.post("/addEvent", (req, res) => {
     }
 });
 
-  //Envoie tout les elements sous la forme de json
+//Envoie tout les elements sous la forme de json
 app.get("/getEvents", (req, res) =>
   {
     if(req.session.user)
@@ -155,13 +155,7 @@ app.post(
         );
       }
       );
-      
-    req.session.user = {
-      username : user,
-      userId : key
-    }
-    res.send(req.session);
-    res.end();
+      res.end();
   }
 );
 
@@ -177,8 +171,6 @@ app.get("/login", (req, res) => {
 app.post("/login", (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
-
-  console.log(req);
 
   db.query(
     "SELECT * FROM client WHERE username = ?;",
@@ -205,8 +197,8 @@ app.post("/login", (req, res) => {
             }
 
             res.send(req.session);
-          }
-          
+            res.end();
+          }          
           else 
           {
             res.send({ message: "Wrong username/password combination!" });

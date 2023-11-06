@@ -35,14 +35,17 @@ class Login extends Component {
   }
 
   login = () => {
-    Axios.post("http://localhost:3001/login", {
-      username: this.state.username,
-      password: this.state.password,
-    }).then((response) => {
+
+    let objetJSon = {
+                        username: this.state.username,
+                        password: this.state.password,
+                    };
+
+    Axios.post("http://localhost:3001/login", objetJSon).then((response) => {
       if (response.data.message) {
         this.setLoginStatus(response.data.message);
       } else {
-        this.setLoginStatus(response.data[0].username);
+        this.setLoginStatus(response.data.user.username);
       }
     });
   };
@@ -51,7 +54,7 @@ class Login extends Component {
   getLogin = () => {
     Axios.get("http://localhost:3001/login").then((response) => {
       if (response.data.loggedIn === true) {
-        this.setLoginStatus(response.data.user[0].username);
+        this.setLoginStatus(response.data.user.username);
       }
     });
   }
