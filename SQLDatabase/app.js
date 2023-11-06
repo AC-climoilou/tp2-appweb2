@@ -12,6 +12,10 @@ const saltRounds = 10;
 
 const app = express();
 
+//Variables de session
+let sessionId;
+let user;
+
 app.use(express.json());
 app.use(
   cors({
@@ -48,7 +52,10 @@ var db = mysql.createConnection({
 //Client_id number
 //name string
 //eDate string representant une date
-app.post("/addEvent", (req, res) => {
+app.post("/addEvent", (req, res) => {  
+
+  if(req.session.authenticated &&( req.session.user.userId == sessionId))
+  {
   const eventName = req.body.name;
   const eventDate = req.body.eDate;
   const clientId = req.body.client_id;
@@ -57,12 +64,20 @@ app.post("/addEvent", (req, res) => {
       "INSERT INTO event (name, eDate, client_id) VALUES ( '" + eventName + "' ,  '" +eventDate + "' , " + clientId + " );",
     );
 
-    res.end();
-  });
+    req.session.user = {
+      username : user,
+      userId : key
+    }
+    res.send(req.session);
+    res.end();  
+    }
+});
 
   //Envoie tout les elements sous la forme de json
 app.get("/getEvents", (req, res) =>
   {
+    if(req.session.user)
+    {
       let err;
       let field;
 
@@ -78,6 +93,7 @@ app.get("/getEvents", (req, res) =>
             }
         }
       ); 
+    }
   }
 );
 
@@ -88,6 +104,12 @@ app.delete(
   {
       const id = req.body.id;
       db.query("DELETE FROM event WHERE event_id = " + id);
+
+      req.session.user = {
+        username : user,
+        userId : key
+      }
+      res.send(req.session);
       res.end();
   }
 );
@@ -96,7 +118,6 @@ app.delete(
 app.post(
   "/addUser", (req, res) => 
   {
-    console.log("addUser appeler");
       const username = req.body.username;
       const password = req.body.password;
 
@@ -115,6 +136,10 @@ app.post(
             {
               let messageErreur = "Erreur de hashage du mot de passe";
               res.send(messageErreur);
+                  req.session.user = {
+      username : req.body.username,
+      userId : key
+    }
             }
             else if(resQuery[0].nbMemeUsername > 0)
             {
@@ -130,6 +155,13 @@ app.post(
         );
       }
       );
+      
+    req.session.user = {
+      username : user,
+      userId : key
+    }
+    res.send(req.session);
+    res.end();
   }
 );
 
@@ -162,9 +194,19 @@ app.post("/login", (req, res) => {
         bcrypt.compare(password, result[0].password, (error, response) => {
           if (response) 
           {
-            req.session.user = result;
-            res.send(result);
+            req.session.authenticated = result;
+            key = Math.random(0,99999999);
+            
+            sessionId = key;
+
+            req.session.user = {
+                username : req.body.username,
+                userId : key
+            }
+
+            res.send(req.session);
           }
+          
           else 
           {
             res.send({ message: "Wrong username/password combination!" });
