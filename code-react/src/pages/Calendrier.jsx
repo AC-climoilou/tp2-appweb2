@@ -16,7 +16,7 @@ class Calendrier extends Component {
 
     loadDeleteEventPage() {
         //remplacer id = 1 par l'id du login
-        var id = 19;
+        var id = 14;
         window.location.href = `http://localhost:3000/deleteEvent/?id=${id}`;
     }
 

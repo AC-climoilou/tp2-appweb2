@@ -8,39 +8,19 @@ function deleteEvent() {
     const loadUserID = () => {
         var search = window.location.search;
         var params = new URLSearchParams(search);
-        setUserID(params.get('id'));
+        var id = params.get('id');
+        setUserID(parseInt(id));
     }
 
-    const sendEventBD = () => {
-        loadUserID();
-        if (title !== "" && date !== null) {
-            const bodyFormData = new FormData();
-            bodyFormData.append("client_id", userID);
+    const loadEvents = () => {
+        axios.get("http://localhost:3001/getEvents")
+    }
 
-            // Convert FormData to JSON
-            let jsonObject = {};
-            bodyFormData.forEach((value, key) => {
-                jsonObject[key] = value;
-            });
-
-            axios.post("http://localhoste:3001/deleteEvent", jsonObject)
-                .then(response => {
-                    console.log('Event added:', response.data);
-                })
-                .catch(error => {
-                    console.error('Error adding event:', error);
-                });
-        } else {
-            //Si data non valide
+    return (
+        <>
             
-        }
-
-        return (
-            <>
-                
-            </>
-        )
-    }
+        </>
+    )
 }
 
 export default deleteEvent;
