@@ -10,30 +10,22 @@ function AddEvent() {
     const loadUserID = () => {
         var search = window.location.search;
         var params = new URLSearchParams(search);
-        setUserID(params.get('id'));
+        var id = params.get('id');
+        setUserID(parseInt(id));
+        console.log(userID);
     }
 
     const sendEventBD = () => {
         loadUserID();
         if (title !== "" && date !== null) {
-            const bodyFormData = new FormData();
-            bodyFormData.append("name", title);
-            bodyFormData.append("eDate", date);
-            bodyFormData.append("client_id", userID);
 
-            // Convert FormData to JSON
-            let jsonObject = {};
-            bodyFormData.forEach((value, key) => {
-                jsonObject[key] = value;
-            });
-
-            axios.post("http://localhoste:3001/addEvent", jsonObject)
-                .then(response => {
-                    console.log('Event added:', response.data);
-                })
-                .catch(error => {
-                    console.error('Error adding event:', error);
-                });
+            axios.post("http://localhost:3001/addEvent", {
+                name: title,
+                eDate: date,
+                client_id: userID,
+              }).then((response) => {
+                console.log(response);
+              });
         } else {
             //Si data non valide
             

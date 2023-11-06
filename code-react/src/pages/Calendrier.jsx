@@ -10,13 +10,13 @@ class Calendrier extends Component {
 
     loadAddEventPage() {
         //remplacer id = 1 par l'id du login
-        var id = 1;
+        var id = 19;
         window.location.href = `http://localhost:3000/addEvent/?id=${id}`;
     }
 
     loadDeleteEventPage() {
         //remplacer id = 1 par l'id du login
-        var id = 1;
+        var id = 19;
         window.location.href = `http://localhost:3000/deleteEvent/?id=${id}`;
     }
 
