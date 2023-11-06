@@ -8,16 +8,17 @@ function AddEvent() {
     const [userID, setUserID] = useState(null);
 
     const loadUserID = () => {
-        var search = window.location.search;
-        var params = new URLSearchParams(search);
-        var id = params.get('id');
-        setUserID(parseInt(id));
-        console.log(userID);
+        var data = 1;
+        axios.get("http://localhost:3001/login")
+        .then((response)=>{
+            data = response.data
+            console.log(response.data)
+        })
     }
 
     const sendEventBD = () => {
         loadUserID();
-        if (title !== "" && date !== null) {
+        if (title !== "" && date !== null && userID !== null) {
 
             let json = {
                 name: title,

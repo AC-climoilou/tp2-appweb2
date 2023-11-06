@@ -5,32 +5,44 @@ import allLocales from '@fullcalendar/core/locales-all';
 import axios from 'axios';
 
 class Calendrier extends Component {
-
-    allEvents = null;
+    constructor(props) {
+        super(props);
+        this.state = {
+            allEvents: []
+        };
+        this.loadEvents = this.loadEvents.bind(this);
+        this.loadAddEventPage = this.loadAddEventPage.bind(this);
+        this.loadDeleteEventPage = this.loadDeleteEventPage.bind(this);
+      }
 
     loadAddEventPage() {
-        //remplacer id = 1 par l'id du login
-        var id = 19;
-        window.location.href = `http://localhost:3000/addEvent/?id=${id}`;
+        window.location.href = `http://localhost:3000/addEvent/`;
     }
 
     loadDeleteEventPage() {
-        //remplacer id = 1 par l'id du login
-        var id = 14;
-        window.location.href = `http://localhost:3000/deleteEvent/?id=${id}`;
+        window.location.href = `http://localhost:3000/deleteEvent/`;
     }
 
     loadEvents() {
+        var data = 1;
+        var table = [];
         axios.get("http://localhost:3001/getEvents")
         .then((response)=>{
-            this.allEvents = response.data
+            data = response.data
+            for (var i in data) {
+                table.push(i, data[i]);
+            }
+            this.setState({
+            allEvents: table
+            })
         })
-        console.log(this.allEvents);
+        console.log(this.state.allEvents);
     }
 
     render() {
         return (
             <div>
+                <button onClick={this.loadEvents}>Load Events</button>
                 <button onClick={this.loadAddEventPage}>Ajouter Event</button>
                 <button onClick={this.loadDeleteEventPage}>Suprimer Event</button>
                 <FullCalendar 
