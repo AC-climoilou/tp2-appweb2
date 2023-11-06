@@ -19,15 +19,18 @@ function AddEvent() {
         loadUserID();
         if (title !== "" && date !== null) {
 
-            axios.post("http://localhost:3001/addEvent", {
+            let json = {
                 name: title,
                 eDate: date,
                 client_id: userID,
-              }).then((response) => {
+              }
+
+            axios.post("http://localhost:3001/addEvent", json).then((response) => {
                 console.log(response);
               });
         } else {
             //Si data non valide
+
         }
     }
 

@@ -60,8 +60,9 @@ app.post("/addEvent", (req, res) => {
   const eventDate = req.body.eDate;
   const clientId = req.body.client_id;
 
-    db.query(
-      "INSERT INTO event (name, eDate, client_id) VALUES ( '" + eventName + "' ,  '" +eventDate + "' , " + clientId + " );",
+
+    db.query(      
+      "INSERT INTO event (name, eDate, client_id) VALUES ( '" + eventName + "' ,  '" +eventDate + "' , " + clientId + " );"
     );
 
     req.session.user = {
@@ -98,7 +99,7 @@ app.get("/getEvents", (req, res) =>
 );
 
 //Efface un evenement dont on envoi l'id 
-//A envoyer, 
+//A envoyer : id : number
 app.delete(
  "/deleteEvent", (req, res) =>
   {
