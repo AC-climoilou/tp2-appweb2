@@ -2,9 +2,11 @@ import React, { Component } from 'react';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import allLocales from '@fullcalendar/core/locales-all';
-
+import axios from 'axios';
 
 class Calendrier extends Component {
+
+    allEvents = null;
 
     loadAddEventPage() {
         //remplacer id = 1 par l'id du login
@@ -16,6 +18,14 @@ class Calendrier extends Component {
         //remplacer id = 1 par l'id du login
         var id = 1;
         window.location.href = `http://localhost:3000/deleteEvent/?id=${id}`;
+    }
+
+    loadEvents() {
+        axios.get("http://localhost:3001/getEvents")
+        .then((response)=>{
+            this.allEvents = response.data
+        })
+        console.log(this.allEvents);
     }
 
     render() {
