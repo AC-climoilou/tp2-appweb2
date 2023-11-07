@@ -25,6 +25,14 @@ app.use(
     credentials: true,
   })
 );
+
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "https://tp2-appweb2.vercel.app");
+  res.header("Access-Control-Allow-Methods", "GET, POST");
+  res.header("Access-Control-Allow-Credentials", true);
+  next();
+});
+
 app.use(cookieParser());
 
 app.use(
@@ -220,6 +228,6 @@ app.post("/login", (req, res) => {
   );
 });
 
-app.listen(3001, () => {
+app.listen(process.env.PORT || 3001, () => {
   console.log("running server");
 });
