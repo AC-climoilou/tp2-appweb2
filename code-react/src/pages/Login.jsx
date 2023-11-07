@@ -53,8 +53,9 @@ class Login extends Component {
   // a tous les rafraichissement de page
   getLogin = () => {
     Axios.get("http://localhost:3001/login").then((response) => {
+      console.log(response.data);
       if (response.data.loggedIn === true) {
-        this.setLoginStatus(response.data.user.username);
+        this.setLoginStatus(response.data.session.user.username);
       }
     });
   }

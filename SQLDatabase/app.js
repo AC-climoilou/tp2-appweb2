@@ -136,25 +136,22 @@ app.post(
       if(err)
       {
         console.log(err);
-        res.send("Erreur sql");
-        res.end();
       }
 
       bcrypt.hash(password, saltRounds,  (err, hash) => 
       {
           if(err)
           {
-            let messageErreur = "Erreur de hashage du mot de passe";
-            res.send(messageErreur);
             req.session.user = {
               username : req.body.username,
               userId : key
             }
+
+            res.send(req.session.user);
           }
           else if(resQuery[0].nbMemeUsername > 0)
           {
-            let messageErreur = "Il y a deja un utilisateur avec ce nom"; 
-            res.send(messageErreur);
+            console.log("Il y a deja un utilisateur avec ce nom"); 
           }
           else
           {
@@ -164,19 +161,24 @@ app.post(
       });
     });
     
-    res.end();
   });
 
 
 app.get("/login", (req, res) => {
   if (req.session.user) {
-    res.send({ loggedIn: true, user: req.session.user });
+    req.session.user = {
+      username : user,
+      userId : key
+    }
+ 
+    res.send({ loggedIn: true, user: req.session.user, session : req.session });
   } else {
     res.send({ loggedIn: false });
   }
 });
 
 app.post("/login", (req, res) => {
+  console.log("post login caller")
   const username = req.body.username;
   const password = req.body.password;
 
