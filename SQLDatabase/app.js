@@ -26,14 +26,6 @@ app.use(
   })
 );
 
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "https://tp2-appweb2.vercel.app");
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  res.setHeader('Access-Control-Allow-Credentials', true);
-  next();
-});
-
 app.use(cookieParser());
 
 app.use(
@@ -229,6 +221,6 @@ app.post("/login", (req, res) => {
   );
 });
 
-app.listen(process.env.PORT || 3001, () => {
+app.listen(3001, () => {
   console.log("running server");
 });
