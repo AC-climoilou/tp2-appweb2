@@ -1,4 +1,5 @@
 //https://www.youtube.com/watch?v=sTHWNPVNvm8
+//Back-end site: https://tp2-backend-5e52.onrender.com
 
 const express = require("express");
 const mysql = require("mysql");
@@ -19,11 +20,20 @@ let user;
 app.use(express.json());
 app.use(
   cors({
-    origin: ["http://localhost:3000"],
+    origin: ["https://tp2-appweb2.vercel.app"],
     methods: ["GET", "POST"],
     credentials: true,
   })
 );
+
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "https://tp2-appweb2.vercel.app");
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  res.setHeader('Access-Control-Allow-Credentials', true);
+  next();
+});
+
 app.use(cookieParser());
 
 app.use(
@@ -46,6 +56,9 @@ var db = mysql.createConnection({
   port: 18745
 });
 
+app.get("/", function (req, res) {
+  res.send("<h1>Hello World!</h1>")
+})
 
 //Permet d'Ajouter un evenement en l'envoiyant sous form de json
 //A envoyer
@@ -216,6 +229,6 @@ app.post("/login", (req, res) => {
   );
 });
 
-app.listen(3001, () => {
+app.listen(process.env.PORT || 3001, () => {
   console.log("running server");
 });

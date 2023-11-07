@@ -29,7 +29,7 @@ class Registration extends Component {
   }
 
   register = () => {
-    Axios.post("http://localhost:3001/addUser", {
+    Axios.post("https://tp2-backend-5e52.onrender.com/addUser", {
       username: this.state.usernameReg,
       password: this.state.passwordReg,
     }).then((response) => {

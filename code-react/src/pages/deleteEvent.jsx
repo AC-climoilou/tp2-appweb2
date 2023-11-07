@@ -13,7 +13,7 @@ function deleteEvent() {
     }
 
     const loadEvents = () => {
-        axios.get("http://localhost:3001/getEvents")
+        axios.get("https://tp2-backend-5e52.onrender.com/getEvents")
     }
 
     return (
