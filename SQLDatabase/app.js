@@ -21,7 +21,7 @@ app.use(express.json());
 app.use(
   cors({
     origin: ["http://localhost:3000"],
-    methods: ["GET", "POST"],
+    methods: ["GET", "POST", "DELETE"],
     credentials: true,
   })
 );
@@ -127,46 +127,45 @@ app.delete(
 app.post(
   "/addUser", (req, res) => 
   {
-      const username = req.body.username;
-      const password = req.body.password;
+    const username = req.body.username;
+    const password = req.body.password;
 
-      //Pour verifier que le username n'est pas deja utiliser
-      db.query("SELECT COUNT(*) as nbMemeUsername FROM client WHERE username = '" + username + "' ;" , 
-      (err, resQuery ) => {
-        if(err)
-        {
-          console.log(err);
-          res.send("Erreur sql");
-          res.end();
-        }
-          bcrypt.hash(password, saltRounds,  (err, hash) => 
+    //Pour verifier que le username n'est pas deja utiliser
+    db.query("SELECT COUNT(*) as nbMemeUsername FROM client WHERE username = '" + username + "' ;" , 
+    (err, resQuery ) => {
+      if(err)
+      {
+        console.log(err);
+        res.send("Erreur sql");
+        res.end();
+      }
+
+      bcrypt.hash(password, saltRounds,  (err, hash) => 
+      {
+          if(err)
           {
-            if(err)
-            {
-              let messageErreur = "Erreur de hashage du mot de passe";
-              res.send(messageErreur);
-                  req.session.user = {
-      username : req.body.username,
-      userId : key
-    }
-            }
-            else if(resQuery[0].nbMemeUsername > 0)
-            {
-              let messageErreur = "Il y a deja un utilisateur avec ce nom"; 
-              res.send(messageErreur);
-            }
-            else
-            {
-               db.query("INSERT INTO client (username, password) VALUES ( '" + username + "' , '"   + hash + "');");
-               res.send("Utilisateur créé");
+            let messageErreur = "Erreur de hashage du mot de passe";
+            res.send(messageErreur);
+            req.session.user = {
+              username : req.body.username,
+              userId : key
             }
           }
-        );
-      }
-      );
-      res.end();
-  }
-);
+          else if(resQuery[0].nbMemeUsername > 0)
+          {
+            let messageErreur = "Il y a deja un utilisateur avec ce nom"; 
+            res.send(messageErreur);
+          }
+          else
+          {
+              db.query("INSERT INTO client (username, password) VALUES ( '" + username + "' , '"   + hash + "');");
+              res.send("Utilisateur créé");
+          }
+      });
+    });
+    
+    res.end();
+  });
 
 
 app.get("/login", (req, res) => {
