@@ -26,8 +26,6 @@ class Calendrier extends Component {
     loadEvents() {
         var data = 1;
         var table = [];
-        var name = [];
-        var date = [];
         var finalTable = [];
         axios.get("http://localhost:3001/getEvents")
         .then((response)=>{
@@ -56,9 +54,7 @@ class Calendrier extends Component {
                     initialView="dayGridMonth"
                     locales={allLocales} 
                     locale={'fr'}
-                    events={[
-                        
-                      ]}
+                    events={this.state.allEvents}
                 />
             </div>
         );
