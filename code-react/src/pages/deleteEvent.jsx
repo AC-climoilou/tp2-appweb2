@@ -13,7 +13,7 @@ function deleteEvent() {
     }
 
     const loadEvents = () => {
-        axios.get("https://localhost:3001/getEvents")
+        axios.get("http://localhost:3001/getEvents")
     }
 
     return (

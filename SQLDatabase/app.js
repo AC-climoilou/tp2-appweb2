@@ -20,7 +20,7 @@ let user;
 app.use(express.json());
 app.use(
   cors({
-    origin: ["https://tp2-appweb2.vercel.app"],
+    origin: ["http://localhost:3000"],
     methods: ["GET", "POST"],
     credentials: true,
   })

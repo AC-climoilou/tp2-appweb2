@@ -9,7 +9,7 @@ function AddEvent() {
 
     const loadUserID = () => {
         var data = 1;
-        axios.get("https://localhost:3001/login")
+        axios.get("http://localhost:3001/login")
         .then((response)=>{
             data = response.data
             console.log(response.data)
@@ -26,7 +26,7 @@ function AddEvent() {
                 client_id: userID,
               }
 
-            axios.post("https://localhost:3001/addEvent", json).then((response) => {
+            axios.post("http://localhost:3001/addEvent", json).then((response) => {
                 console.log(response);
               });
         } else {

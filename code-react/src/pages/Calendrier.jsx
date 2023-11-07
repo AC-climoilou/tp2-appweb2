@@ -16,11 +16,11 @@ class Calendrier extends Component {
       }
 
     loadAddEventPage() {
-        window.location.href = `https://localhost:3000/addEvent/`;
+        window.location.href = `http://localhost:3000/addEvent/`;
     }
 
     loadDeleteEventPage() {
-        window.location.href = `https://localhost:3000/deleteEvent/`;
+        window.location.href = `http://localhost:3000/deleteEvent/`;
     }
 
     loadEvents() {
@@ -29,7 +29,7 @@ class Calendrier extends Component {
         var name = [];
         var date = [];
         var finalTable = [];
-        axios.get("https://localhost:3001/getEvents")
+        axios.get("http://localhost:3001/getEvents")
         .then((response)=>{
             data = response.data
             for (var i in data) {
