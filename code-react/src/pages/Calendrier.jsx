@@ -26,14 +26,20 @@ class Calendrier extends Component {
     loadEvents() {
         var data = 1;
         var table = [];
+        var name = [];
+        var date = [];
+        var finalTable = [];
         axios.get("http://localhost:3001/getEvents")
         .then((response)=>{
             data = response.data
             for (var i in data) {
-                table.push(i, data[i]);
+                table.push(data[i]);
+            }
+            for (var i = 0 ; i < data.length ; i++) {
+                finalTable.push({title: table[i].name, start: table[i].eDate});
             }
             this.setState({
-            allEvents: table
+            allEvents: finalTable
             })
         })
         console.log(this.state.allEvents);
