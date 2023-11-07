@@ -166,6 +166,7 @@ app.post(
 
 app.get("/login", (req, res) => {
   if (req.session.user) {
+
     res.send({ loggedIn: true, user: req.session.user });
   } else {
     res.send({ loggedIn: false });
@@ -190,7 +191,6 @@ app.post("/login", (req, res) => {
         bcrypt.compare(password, result[0].password, (error, response) => {
           if (response) 
           {
-            req.session.authenticated = result;
             key = Math.random(0,99999999);
             
             sessionId = key;

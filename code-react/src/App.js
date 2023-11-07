@@ -6,17 +6,36 @@ import Registration from "./pages/Registration";
 import Login from "./pages/Login";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import AddEvent from "./pages/addEvent";
+import { useEffect, useState } from "react";
+import { Axios } from "axios";
 
 function App() {
+
+
+  let [login, setLogin] = useState(false);
+
+  useEffect = () => {
+    Axios.get("http://localhost:3001/login").then(
+      (response) => {
+          setLogin(response);
+      }
+    );
+  }
+
+  
+
   return (
     <BrowserRouter>
       <div className="App">
 
+
+        
+
         <Navbar />
 
         <Routes>
-          <Route exact path="/register" element={<Registration />} />
-          <Route exact path="/login" element={<Login />} />
+          <Route exact path="/register" element={<Registration  />} />
+          <Route exact path="/login" element={<Login  />} />
           <Route exact path="/" element={<Accueil />} />
           <Route exact path="/calendrier" element={<Calendrier />} />
           <Route exact path="/addEvent" element={<AddEvent />} />
