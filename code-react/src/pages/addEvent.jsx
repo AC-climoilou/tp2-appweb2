@@ -31,7 +31,6 @@ function AddEvent() {
               });
         } else {
             //Si data non valide
-
         }
     }
 

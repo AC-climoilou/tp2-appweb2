@@ -203,7 +203,8 @@ app.post("/login", (req, res) => {
 
             req.session.user = {
                 username : req.body.username,
-                userId : key
+                userId : key,
+                clientId : result[0].client_id
             }
 
             res.send(req.session);

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Axios from "axios";
 import "../App.css";
+import userIDGlobal from '../Variables';
 
 Axios.defaults.withCredentials = true;
 
@@ -45,6 +46,9 @@ class Login extends Component {
       if (response.data.message) {
         this.setLoginStatus(response.data.message);
       } else {
+        console.log(response.data.user.clientId);
+        userIDGlobal.id = response.data.user.clientId;
+        console.log(userIDGlobal);
         this.setLoginStatus(response.data.user.username);
       }
     });

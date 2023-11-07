@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Axios from "axios";
 import "../App.css";
+import userIDGlobal from '../Variables';
 
 Axios.defaults.withCredentials = true;
 
@@ -42,7 +43,7 @@ class Registration extends Component {
       <div className="App">
         <div className="registration">
           <h1>Registration</h1>
-
+          <p>{userIDGlobal.id}</p>
           <div>
             <input
               type="text"
