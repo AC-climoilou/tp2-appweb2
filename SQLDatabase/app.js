@@ -207,18 +207,16 @@ app.post("/login", (req, res) => {
             key = Math.random(0,99999999);
             
             sessionId = key;
-            
+
             req.session.user = {
                 username : req.body.username,
-                userId : key
+                userId : key,
+                session: req.session,
+                session_id: req.sessionID,
+                store: req.sessionStore
             }
 
-            res.send({
-              session: req.session,
-              session_id: req.sessionID,
-              store: req.sessionStore
-            });
-              
+            res.send(req.session);
             res.end();
           }          
           else 
