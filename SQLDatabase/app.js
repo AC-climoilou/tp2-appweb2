@@ -180,7 +180,7 @@ app.post(
 app.get("/login", (req, res) => {
   if (req.session.user) {
 
-    res.send({ loggedIn: true, user: req.session.user, session: req.session, session_id: req.sessionID, store: req.sessionStore});
+    res.send({ loggedIn: true, user: req.session.user});
   } else {
     res.send({ loggedIn: false });
   }
@@ -210,7 +210,10 @@ app.post("/login", (req, res) => {
 
             req.session.user = {
                 username : req.body.username,
-                userId : key
+                userId : key,
+                session: req.session,
+                session_id: req.sessionID,
+                store: req.sessionStore
             }
 
             res.send(req.session);
