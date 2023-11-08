@@ -21,7 +21,7 @@ app.use(express.json());
 app.use(
   cors({
     origin: ["https://tp2-appweb2.vercel.app"],
-    methods: ["GET", "POST"],
+    methods: ["GET", "POST", "DELETE", "PUT"],
     credentials: true,
   })
 );
