@@ -57,7 +57,7 @@ var db = mysql.createConnection({
 });
 
 app.get("/", function (req, res) {
-  res.send("<h1>Hello World!</h1>")
+  res.send("<h1>Bienvenue dans le back-end!</h1>")
 })
 
 //Permet d'Ajouter un evenement en l'envoiyant sous form de json
