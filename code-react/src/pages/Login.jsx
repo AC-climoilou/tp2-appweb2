@@ -42,6 +42,7 @@ class Login extends Component {
                     };
 
     Axios.post("https://tp2-backend-5e52.onrender.com/login", objetJSon).then((response) => {
+      console.log(response.data)
       if (response.data.message) {
         this.setLoginStatus(response.data.message);
       } else {
