@@ -4,12 +4,15 @@ import React, { useState } from 'react';
 function deleteEvent() {
 
     const [userID, setUserID] = useState(null);
+    const [listEvents, setListEvents] = useState(null);
 
     const loadUserID = () => {
-        var search = window.location.search;
-        var params = new URLSearchParams(search);
-        var id = params.get('id');
-        setUserID(parseInt(id));
+        var id = null;
+        axios.get("http://localhost:3001/loginID")
+        .then((response)=>{
+            id = response.data[0];
+            setUserID(id);
+        })
     }
 
     const loadEvents = () => {
