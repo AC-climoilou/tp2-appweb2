@@ -8,7 +8,8 @@ class Calendrier extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            allEvents: []
+            allEvents: [],
+            idUser: 2
         };
         this.loadEvents = this.loadEvents.bind(this);
         this.loadAddEventPage = this.loadAddEventPage.bind(this);
@@ -23,7 +24,19 @@ class Calendrier extends Component {
         window.location.href = `http://localhost:3000/deleteEvent/`;
     }
 
+    getUserID() {
+        var i = 1;
+        axios.get("http://localhost:3001/loginID")
+        .then((response)=>{
+            this.setState({
+                idUser: response.data[0].client_id
+            })
+        })
+    }
+
     loadEvents() {
+        this.getUserID();
+        console.log(this.state.idUser)
         var data = 1;
         var table = [];
         var finalTable = [];
@@ -34,13 +47,15 @@ class Calendrier extends Component {
                 table.push(data[i]);
             }
             for (var i = 0 ; i < data.length ; i++) {
-                finalTable.push({title: table[i].name, start: table[i].eDate});
+                //verification id user connected
+                if(table[i].client_id === this.state.idUser) {
+                    finalTable.push({title: table[i].name, start: table[i].eDate});
+                }
             }
             this.setState({
             allEvents: finalTable
             })
         })
-        console.log(this.state.allEvents);
     }
 
     render() {

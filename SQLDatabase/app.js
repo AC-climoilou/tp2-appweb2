@@ -13,6 +13,7 @@ const saltRounds = 10;
 
 const app = express();
 
+let userIDLog;
 //Variables de session
 let sessionId;
 let user;
@@ -177,6 +178,11 @@ app.get("/login", (req, res) => {
   }
 });
 
+app.get("/loginID", (req, res) => {
+  res.send(userIDLog);
+  res.end();
+})
+
 app.post("/login", (req, res) => {
   console.log("post login caller")
   const username = req.body.username;
@@ -190,6 +196,7 @@ app.post("/login", (req, res) => {
         res.send({ err: err });
       }
 
+      userIDLog = result;
       console.log(result);
       if (result.length > 0) 
       {

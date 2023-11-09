@@ -8,16 +8,17 @@ function AddEvent() {
     const [userID, setUserID] = useState(null);
 
     const loadUserID = () => {
-        var data = 1;
-        axios.get("http://localhost:3001/login")
+        var id = null;
+        axios.get("http://localhost:3001/loginID")
         .then((response)=>{
-            data = response.data
-            console.log(response.data)
+            id = response.data[0];
+            setUserID(id);
         })
     }
 
     const sendEventBD = () => {
         loadUserID();
+        console.log(userID);
         if (title !== "" && date !== null && userID !== null) {
 
             let json = {
@@ -27,7 +28,6 @@ function AddEvent() {
               }
 
             axios.post("http://localhost:3001/addEvent", json).then((response) => {
-                console.log(response);
               });
         } else {
             //Si data non valide
