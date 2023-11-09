@@ -6,6 +6,7 @@ import Registration from "./pages/Registration";
 import Login from "./pages/Login";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import AddEvent from "./pages/addEvent";
+import DeleteEvent from "./pages/deleteEvent";
 
 function App() {
   return (
@@ -20,7 +21,7 @@ function App() {
           <Route exact path="/" element={<Accueil />} />
           <Route exact path="/calendrier" element={<Calendrier />} />
           <Route exact path="/addEvent" element={<AddEvent />} />
-          <Route exact path="/deleteEvent" element={<AddEvent />} />
+          <Route exact path="/deleteEvent" element={<DeleteEvent />} />
         </Routes>
 
       </div>
