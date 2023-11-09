@@ -1,4 +1,7 @@
 
-let userIDGlobal = {id : 0} ;
+let global = 
+{
+    id : 0
+} ;
 
-export default userIDGlobal;
+export default global;
