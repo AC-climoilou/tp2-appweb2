@@ -15,16 +15,10 @@ class Navbar extends Component {
 
     render() {
 
-        console.log(localStorage.getItem("logged"));
 
         global.renderNavbar = () =>
         {
             this.forceUpdate();
-        }
-
-        global.navigateCallback = () =>
-        {
-
         }
         
         if(localStorage.getItem("logged") ===  "false")
