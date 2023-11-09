@@ -19,9 +19,9 @@ function App() {
           <Route exact path="/register" element={<Registration />} />
           <Route exact path="/login" element={<Login />} />
           <Route exact path="/" element={<Accueil />} />
-          <Route exact path="/calendrier" element={localStorage.getItem("logged") === "true" ?  <Calendrier /> : <redirect to="/"/>} />
-          <Route exact path="/addEvent" element={localStorage.getItem("logged") === "true" ?  <AddEvent /> : <redirect to="/"/>} />
-          <Route exact path="/deleteEvent" element={localStorage.getItem("logged") === "true" ?  <DeleteEvent /> : <redirect to="/"/>} />
+          <Route exact path="/calendrier" element={localStorage.getItem("logged") === "true" ?  <Calendrier /> : <redirect to="/login"/>} />
+          <Route exact path="/addEvent" element={localStorage.getItem("logged") === "true" ?  <AddEvent /> : <redirect to="/login"/>} />
+          <Route exact path="/deleteEvent" element={localStorage.getItem("logged") === "true" ?  <DeleteEvent /> : <redirect to="/login"/>} />
         </Routes>
 
       </div>
