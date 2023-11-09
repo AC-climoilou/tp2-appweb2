@@ -16,12 +16,28 @@ function deleteEvent() {
     }
 
     const loadEvents = () => {
+        var data = 1;
+        var table = [];
+        var finalTable = [];
         axios.get("http://localhost:3001/getEvents")
+        .then((response)=>{
+            data = response.data
+            for (var i in data) {
+                table.push(data[i]);
+            }
+            for (var i = 0 ; i < data.length ; i++) {
+                //verification id user connected
+                if(table[i].client_id === userID) {
+                    finalTable.push({title: table[i].name, start: table[i].eDate});
+                }
+            }
+            setListEvents(finalTable);
+        })
     }
 
     return (
         <>
-            
+            <button>Load Events</button>
         </>
     )
 }
