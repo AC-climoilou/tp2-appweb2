@@ -3,18 +3,31 @@ import { NavLink } from 'react-router-dom';
 import global from '../Variables';
 
 class Navbar extends Component {
+
     
+    logout()
+    {
+        global.id = 0;
+        localStorage.setItem("logged", "false");
+        window.location.href = ("/");
+    }
     
 
     render() {
+
+        console.log(localStorage.getItem("logged"));
+
         global.renderNavbar = () =>
         {
             this.forceUpdate();
         }
 
+        global.navigateCallback = () =>
+        {
 
+        }
         
-        if(global.id === 0)
+        if(localStorage.getItem("logged") ===  "false")
         {
         return (
             <nav className="navBar">
@@ -22,7 +35,6 @@ class Navbar extends Component {
                     <li><NavLink to="/">Accueil</NavLink></li>
                     <li><NavLink to="/login">Login</NavLink></li>
                     <li><NavLink to="/register">Register</NavLink></li>
-                    <li><NavLink to="/calendrier/">Calendrier</NavLink></li>
                 </ul>
             </nav>
         );
@@ -34,7 +46,7 @@ class Navbar extends Component {
                     <ul>
                         <li><NavLink to="/">Accueil</NavLink></li>
                         <li><NavLink to="/calendrier/">Calendrier</NavLink></li>
-                        <li><NavLink>Deconnexion</NavLink></li>
+                        <li><NavLink onClick={() => {this.logout()}}>Deconnexion</NavLink></li>
                     </ul>
                 </nav>
             )

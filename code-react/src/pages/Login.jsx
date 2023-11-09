@@ -51,6 +51,7 @@ class Login extends Component {
       else 
       {
         global.id = response.data.user.clientId;
+        localStorage.setItem("logged", "true");
         this.setLoginStatus(response.data.user.username);
         global.renderNavbar();
       }
