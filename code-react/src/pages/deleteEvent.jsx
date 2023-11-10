@@ -5,6 +5,7 @@ function DeleteEvent() {
 
     const [userID, setUserID] = useState(null);
     const [listEvents, setListEvents] = useState(null);
+    const [loadedEvents, setLoadedEvents] = useState(false);
 
     const loadUserID = () => {
         var i = 1;
@@ -16,7 +17,6 @@ function DeleteEvent() {
 
     const loadEvents = () => {
         loadUserID();
-        console.log(userID)
         var data = 1;
         var table = [];
         var finalTable = [];
@@ -32,15 +32,37 @@ function DeleteEvent() {
                     finalTable.push({title: table[i].name, start: table[i].eDate});
                 }
             }
-            console.log(finalTable)
             setListEvents(finalTable);
+            setLoadedEvents(true);
         })
+    }
+
+    const deleteEventHandler = (id) => {
+        console.log(id);
+        let json = {
+            id: id
+          }
+          axios.delete("http://localhost:3001/deleteEvent", json).then((response) => {
+                console.log(response)
+            });
     }
 
     return (
         <>
             <button onClick={loadEvents}>Load Events</button>
-
+            {loadedEvents && (
+                <div>
+                    <h1>Events:</h1>
+                    <ul>
+                        {listEvents.map((event, index) => (
+                            <li key={index}>
+                                <h2>{event.title}</h2>
+                                <button onClick={() => deleteEventHandler(event.id)}>Delete</button>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            )}
         </>
     )
 }
