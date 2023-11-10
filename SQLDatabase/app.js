@@ -76,7 +76,6 @@ app.post("/addEvent", (req, res) => {
       userId : key
     }
     res.send(req.session);
-    res.end();  
     }
 });
 
@@ -119,7 +118,6 @@ app.delete(
         userId : key
       }
       res.send(req.session);
-      res.end();
     }
   }
 );
@@ -180,7 +178,6 @@ app.get("/login", (req, res) => {
 
 app.get("/loginID", (req, res) => {
   res.send(userIDLog);
-  res.end();
 })
 
 app.post("/login", (req, res) => {
@@ -215,7 +212,6 @@ app.post("/login", (req, res) => {
             }
 
             res.send(req.session);
-            res.end();
           }          
           else 
           {
