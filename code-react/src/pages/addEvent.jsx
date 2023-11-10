@@ -8,7 +8,6 @@ function AddEvent() {
     const [userID, setUserID] = useState(null);
 
     const loadUserID = () => {
-        var i = 1;
         axios.get("http://localhost:3001/loginID")
         .then((response)=>{
             setUserID(response.data[0].client_id);

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Axios from "axios";
 import "../App.css";
 import global from '../Variables';
-import { redirect  } from 'react-router-dom';
 
 Axios.defaults.withCredentials = true;
 

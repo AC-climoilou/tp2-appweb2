@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Axios from "axios";
 import "../App.css";
-import global from '../Variables';
 
 Axios.defaults.withCredentials = true;
 
