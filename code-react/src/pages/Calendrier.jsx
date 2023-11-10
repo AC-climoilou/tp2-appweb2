@@ -21,16 +21,16 @@ class Calendrier extends Component {
       }
 
     loadAddEventPage() {
-        window.location.href = `https://tp2-appweb2.vercel.app/addEvent/`;
+        window.location.href = `http://localhost:3000/addEvent/`;
     }
 
     loadDeleteEventPage() {
-        window.location.href = `https://tp2-appweb2.vercel.app/deleteEvent/`;
+        window.location.href = `http://localhost:3000/deleteEvent/`;
     }
 
     getUserID() {
         var i = 1;
-        axios.get("http://localhost:3001/loginID")
+        axios.get("https://tp2-backend-5e52.onrender.com/loginID")
         .then((response)=>{
             this.setState({
                 idUser: response.data[0].client_id
@@ -44,7 +44,7 @@ class Calendrier extends Component {
         var data = 1;
         var table = [];
         var finalTable = [];
-        axios.get("http://localhost:3001/getEvents")
+        axios.get("https://tp2-backend-5e52.onrender.com/getEvents")
         .then((response)=>{
             data = response.data
             for (var i in data) {
