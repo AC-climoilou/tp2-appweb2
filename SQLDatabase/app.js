@@ -21,14 +21,14 @@ let user;
 app.use(express.json());
 app.use(
   cors({
-    origin: ["https://tp2-appweb2.vercel.app"],
+    origin: ["http://localhost:3000"],
     methods: ["GET", "POST", "DELETE"],
     credentials: true,
   })
 );
 
 app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "https://tp2-appweb2.vercel.app");
+  res.header("Access-Control-Allow-Origin", "http://localhost:3000");
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, DELETE');
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   res.setHeader('Access-Control-Allow-Credentials', true);
