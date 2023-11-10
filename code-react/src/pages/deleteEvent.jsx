@@ -29,9 +29,10 @@ function DeleteEvent() {
             for (var i = 0 ; i < data.length ; i++) {
                 //verification id user connected
                 if(table[i].client_id === userID) {
-                    finalTable.push({title: table[i].name, start: table[i].eDate});
+                    finalTable.push({title: table[i].name, start: table[i].eDate, id: table[i].event_id});
                 }
             }
+            console.log(finalTable);
             setListEvents(finalTable);
             setLoadedEvents(true);
         })
