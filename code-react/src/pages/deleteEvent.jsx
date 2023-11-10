@@ -8,7 +8,6 @@ function DeleteEvent() {
     const [loadedEvents, setLoadedEvents] = useState(false);
 
     const loadUserID = () => {
-        var i = 1;
         axios.get("http://localhost:3001/loginID")
         .then((response)=>{
             setUserID(response.data[0].client_id);
@@ -26,10 +25,10 @@ function DeleteEvent() {
             for (var i in data) {
                 table.push(data[i]);
             }
-            for (var i = 0 ; i < data.length ; i++) {
+            for (var j = 0 ; j < data.length ; j++) {
                 //verification id user connected
-                if(table[i].client_id === userID) {
-                    finalTable.push({title: table[i].name, start: table[i].eDate, id: table[i].event_id});
+                if(table[j].client_id === userID) {
+                    finalTable.push({title: table[j].name, start: table[j].eDate, id: table[j].event_id});
                 }
             }
             console.log(finalTable);
@@ -43,7 +42,7 @@ function DeleteEvent() {
         let json = {
             id: id
           }
-          axios.delete("http://localhost:3001/deleteEvent", json).then((response) => {
+          axios.delete("http://localhost:3001/deleteEvent", {data: json}).then((response) => {
                 console.log(response)
             });
     }
