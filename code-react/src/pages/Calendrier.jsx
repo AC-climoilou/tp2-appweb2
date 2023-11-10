@@ -21,11 +21,11 @@ class Calendrier extends Component {
       }
 
     loadAddEventPage() {
-        window.location.href = `http://localhost:3000/addEvent/`;
+        window.location.href = `https://tp2-appweb2.vercel.app/addEvent/`;
     }
 
     loadDeleteEventPage() {
-        window.location.href = `http://localhost:3000/deleteEvent/`;
+        window.location.href = `https://tp2-appweb2.vercel.app/deleteEvent/`;
     }
 
     getUserID() {
