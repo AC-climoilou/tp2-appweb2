@@ -108,9 +108,12 @@ app.get("/getEvents", (req, res) =>
 app.delete(
  "/deleteEvent", (req, res) =>
   {
+    console.log(req.body);
     if(req.session.authenticated &&( req.session.user.userId == sessionId))
      {   
+      
       const id = req.body.id;
+      console.log("DELETE FROM event WHERE event_id = " + id);
       db.query("DELETE FROM event WHERE event_id = " + id);
 
       req.session.user = {
