@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import Axios from "axios";
 import "../App.css";
-import userIDGlobal from '../Variables';
+import global from '../Variables';
+import { redirect  } from 'react-router-dom';
 
 Axios.defaults.withCredentials = true;
 
@@ -43,13 +44,15 @@ class Login extends Component {
                     };
 
     Axios.post("http://localhost:3001/login", objetJSon).then((response) => {
-      if (response.data.message) {
+      if (response.data.message) 
+      {
         this.setLoginStatus(response.data.message);
-      } else {
-        console.log(response.data.user.clientId);
-        userIDGlobal.id = response.data.user.clientId;
-        console.log(userIDGlobal);
-        this.setLoginStatus(response.data.user.username);
+      } 
+      else 
+      {
+        global.id = response.data.user.clientId;
+        localStorage.setItem("logged", "true");
+        window.location.href = "/";
       }
     });
   };

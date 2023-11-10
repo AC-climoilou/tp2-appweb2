@@ -4,9 +4,11 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import allLocales from '@fullcalendar/core/locales-all';
 import axios from 'axios';
 
+
 class Calendrier extends Component {
     constructor(props) {
         super(props);
+
         this.state = {
             allEvents: [],
             idUser: 2
@@ -14,6 +16,8 @@ class Calendrier extends Component {
         this.loadEvents = this.loadEvents.bind(this);
         this.loadAddEventPage = this.loadAddEventPage.bind(this);
         this.loadDeleteEventPage = this.loadDeleteEventPage.bind(this);
+
+    
       }
 
     loadAddEventPage() {
@@ -59,6 +63,7 @@ class Calendrier extends Component {
     }
 
     render() {
+
         return (
             <div>
                 <button onClick={this.loadEvents}>Load Events</button>
