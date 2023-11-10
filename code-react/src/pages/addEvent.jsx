@@ -8,7 +8,6 @@ function AddEvent() {
     const [userID, setUserID] = useState(null);
 
     const loadUserID = () => {
-        var i = 1;
         axios.get("https://tp2-backend-5e52.onrender.com/loginID")
         .then((response)=>{
             setUserID(response.data[0].client_id);

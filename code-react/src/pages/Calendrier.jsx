@@ -29,7 +29,6 @@ class Calendrier extends Component {
     }
 
     getUserID() {
-        var i = 1;
         axios.get("https://tp2-backend-5e52.onrender.com/loginID")
         .then((response)=>{
             this.setState({
@@ -50,10 +49,10 @@ class Calendrier extends Component {
             for (var i in data) {
                 table.push(data[i]);
             }
-            for (var i = 0 ; i < data.length ; i++) {
+            for (var j = 0 ; j < data.length ; j++) {
                 //verification id user connected
-                if(table[i].client_id === this.state.idUser) {
-                    finalTable.push({title: table[i].name, start: table[i].eDate});
+                if(table[j].client_id === this.state.idUser) {
+                    finalTable.push({title: table[j].name, start: table[j].eDate});
                 }
             }
             this.setState({
