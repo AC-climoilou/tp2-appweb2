@@ -9,7 +9,7 @@ function AddEvent() {
 
     const loadUserID = () => {
         var i = 1;
-        axios.get("https://tp2-backend-5e52.onrender.com/loginID")
+        axios.get("http://localhost:3001/loginID")
         .then((response)=>{
             setUserID(response.data[0].client_id);
         })
@@ -26,7 +26,7 @@ function AddEvent() {
                 client_id: userID,
               }
 
-            axios.post("https://tp2-backend-5e52.onrender.com/addEvent", json).then((response) => {
+            axios.post("http://localhost:3001/addEvent", json).then((response) => {
               });
         } else {
             //Si data non valide

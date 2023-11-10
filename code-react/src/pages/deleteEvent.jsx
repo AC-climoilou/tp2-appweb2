@@ -8,7 +8,7 @@ function DeleteEvent() {
     const [loadedEvents, setLoadedEvents] = useState(false);
 
     const loadUserID = () => {
-        axios.get("https://tp2-backend-5e52.onrender.com/loginID")
+        axios.get("http://localhost:3001/loginID")
         .then((response)=>{
             setUserID(response.data[0].client_id);
         })
@@ -19,7 +19,7 @@ function DeleteEvent() {
         var data = 1;
         var table = [];
         var finalTable = [];
-        axios.get("https://tp2-backend-5e52.onrender.com/getEvents")
+        axios.get("http://localhost:3001/getEvents")
         .then((response)=>{
             data = response.data
             for (var i in data) {
@@ -42,7 +42,7 @@ function DeleteEvent() {
         let json = {
             id: id
           }
-          axios.delete("https://tp2-backend-5e52.onrender.com/deleteEvent", {data: json}).then((response) => {
+          axios.delete("http://localhost:3001/deleteEvent", {data: json}).then((response) => {
                 console.log(response)
             });
     }
