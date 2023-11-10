@@ -13,6 +13,7 @@ const saltRounds = 10;
 
 const app = express();
 
+let userIDLog;
 //Variables de session
 let sessionId;
 let user;
@@ -20,19 +21,11 @@ let user;
 app.use(express.json());
 app.use(
   cors({
-    origin: ["https://tp2-appweb2.vercel.app"],
-    methods: ["GET", "POST", "DELETE", "PUT"],
+    origin: ["http://localhost:3000"],
+    methods: ["GET", "POST", "DELETE"],
     credentials: true,
   })
 );
-
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "https://tp2-appweb2.vercel.app");
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  res.setHeader('Access-Control-Allow-Credentials', true);
-  next();
-});
 
 app.use(cookieParser());
 
@@ -57,7 +50,7 @@ var db = mysql.createConnection({
 });
 
 app.get("/", function (req, res) {
-  res.send("<h1>Bienvenue dans le back-end!</h1>")
+  res.send("<h1>Hello World!</h1>")
 })
 
 //Permet d'Ajouter un evenement en l'envoiyant sous form de json
@@ -83,7 +76,6 @@ app.post("/addEvent", (req, res) => {
       userId : key
     }
     res.send(req.session);
-    res.end();  
     }
 });
 
@@ -116,9 +108,12 @@ app.get("/getEvents", (req, res) =>
 app.delete(
  "/deleteEvent", (req, res) =>
   {
+    console.log(req.body);
     if(req.session.authenticated &&( req.session.user.userId == sessionId))
      {   
+      
       const id = req.body.id;
+      console.log("DELETE FROM event WHERE event_id = " + id);
       db.query("DELETE FROM event WHERE event_id = " + id);
 
       req.session.user = {
@@ -126,7 +121,6 @@ app.delete(
         userId : key
       }
       res.send(req.session);
-      res.end();
     }
   }
 );
@@ -135,58 +129,62 @@ app.delete(
 app.post(
   "/addUser", (req, res) => 
   {
-      const username = req.body.username;
-      const password = req.body.password;
+    const username = req.body.username;
+    const password = req.body.password;
 
-      //Pour verifier que le username n'est pas deja utiliser
-      db.query("SELECT COUNT(*) as nbMemeUsername FROM client WHERE username = '" + username + "' ;" , 
-      (err, resQuery ) => {
-        if(err)
-        {
-          console.log(err);
-          res.send("Erreur sql");
-          res.end();
-        }
-          bcrypt.hash(password, saltRounds,  (err, hash) => 
-          {
-            if(err)
-            {
-              let messageErreur = "Erreur de hashage du mot de passe";
-              res.send(messageErreur);
-                  req.session.user = {
-      username : req.body.username,
-      userId : key
-    }
-            }
-            else if(resQuery[0].nbMemeUsername > 0)
-            {
-              let messageErreur = "Il y a deja un utilisateur avec ce nom"; 
-              res.send(messageErreur);
-            }
-            else
-            {
-               db.query("INSERT INTO client (username, password) VALUES ( '" + username + "' , '"   + hash + "');");
-               res.send("Utilisateur créé");
-            }
-          }
-        );
+    //Pour verifier que le username n'est pas deja utiliser
+    db.query("SELECT COUNT(*) as nbMemeUsername FROM client WHERE username = '" + username + "' ;" , 
+    (err, resQuery ) => {
+      if(err)
+      {
+        console.log(err);
       }
-      );
-      res.end();
-  }
-);
+
+      bcrypt.hash(password, saltRounds,  (err, hash) => 
+      {
+          if(err)
+          {
+            req.session.user = {
+              username : req.body.username,
+              userId : key
+            }
+
+            res.send(req.session.user);
+          }
+          else if(resQuery[0].nbMemeUsername > 0)
+          {
+            console.log("Il y a deja un utilisateur avec ce nom"); 
+          }
+          else
+          {
+              db.query("INSERT INTO client (username, password) VALUES ( '" + username + "' , '"   + hash + "');");
+              res.send("Utilisateur créé");
+          }
+      });
+    });
+    
+  });
 
 
 app.get("/login", (req, res) => {
   if (req.session.user) {
-
-    res.send({ loggedIn: true, user: req.session.user });
+    req.session.user = {
+      username : user,
+      userId : key
+    }
+ 
+    res.send({ loggedIn: true, user: req.session.user, session : req.session });
   } else {
     res.send({ loggedIn: false });
   }
 });
 
+app.get("/loginID", (req, res) => {
+  res.send(userIDLog);
+})
+
 app.post("/login", (req, res) => {
+  console.log("post login caller")
   const username = req.body.username;
   const password = req.body.password;
 
@@ -198,23 +196,25 @@ app.post("/login", (req, res) => {
         res.send({ err: err });
       }
 
+      userIDLog = result;
       console.log(result);
       if (result.length > 0) 
       {
         bcrypt.compare(password, result[0].password, (error, response) => {
           if (response) 
           {
+            req.session.authenticated = result;
             key = Math.random(0,99999999);
             
             sessionId = key;
 
             req.session.user = {
                 username : req.body.username,
-                userId : key
+                userId : key,
+                clientId : result[0].client_id
             }
 
             res.send(req.session);
-            res.end();
           }          
           else 
           {
@@ -229,6 +229,6 @@ app.post("/login", (req, res) => {
   );
 });
 
-app.listen(process.env.PORT || 3001, () => {
+app.listen(3001, () => {
   console.log("running server");
 });

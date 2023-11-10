@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Axios from "axios";
 import "../App.css";
+import global from '../Variables';
 
 Axios.defaults.withCredentials = true;
 
@@ -29,7 +30,7 @@ class Registration extends Component {
   }
 
   register = () => {
-    Axios.post("https://tp2-backend-5e52.onrender.com/addUser", {
+    Axios.post("http://localhost:3001/addUser", {
       username: this.state.usernameReg,
       password: this.state.passwordReg,
     }).then((response) => {
@@ -42,7 +43,6 @@ class Registration extends Component {
       <div className="App">
         <div className="registration">
           <h1>Registration</h1>
-
           <div>
             <input
               type="text"

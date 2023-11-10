@@ -4,48 +4,66 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import allLocales from '@fullcalendar/core/locales-all';
 import axios from 'axios';
 
+
 class Calendrier extends Component {
     constructor(props) {
         super(props);
+
         this.state = {
-            allEvents: []
+            allEvents: [],
+            idUser: 2
         };
         this.loadEvents = this.loadEvents.bind(this);
         this.loadAddEventPage = this.loadAddEventPage.bind(this);
         this.loadDeleteEventPage = this.loadDeleteEventPage.bind(this);
+
+    
       }
 
     loadAddEventPage() {
-        window.location.href = `https://tp2-appweb2.vercel.app/addEvent/`;
+        window.location.href = `http://localhost:3000/addEvent/`;
     }
 
     loadDeleteEventPage() {
-        window.location.href = `https://tp2-appweb2.vercel.app/deleteEvent/`;
+        window.location.href = `http://localhost:3000/deleteEvent/`;
+    }
+
+    getUserID() {
+        var i = 1;
+        axios.get("http://localhost:3001/loginID")
+        .then((response)=>{
+            this.setState({
+                idUser: response.data[0].client_id
+            })
+        })
     }
 
     loadEvents() {
+        this.getUserID();
+        console.log(this.state.idUser)
         var data = 1;
         var table = [];
-        var name = [];
-        var date = [];
         var finalTable = [];
-        axios.get("https://tp2-backend-5e52.onrender.com/getEvents")
+        axios.get("http://localhost:3001/getEvents")
         .then((response)=>{
             data = response.data
             for (var i in data) {
                 table.push(data[i]);
             }
             for (var i = 0 ; i < data.length ; i++) {
-                finalTable.push({title: table[i].name, start: table[i].eDate});
+                //verification id user connected
+                if(table[i].client_id === this.state.idUser) {
+                    finalTable.push({title: table[i].name, start: table[i].eDate});
+                }
             }
             this.setState({
             allEvents: finalTable
             })
         })
-        console.log(this.state.allEvents);
     }
 
     render() {
+
         return (
             <div>
                 <button onClick={this.loadEvents}>Load Events</button>
@@ -56,9 +74,7 @@ class Calendrier extends Component {
                     initialView="dayGridMonth"
                     locales={allLocales} 
                     locale={'fr'}
-                    events={[
-                        
-                      ]}
+                    events={this.state.allEvents}
                 />
             </div>
         );

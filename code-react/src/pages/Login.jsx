@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import Axios from "axios";
 import "../App.css";
+import global from '../Variables';
+import { redirect  } from 'react-router-dom';
 
 Axios.defaults.withCredentials = true;
 
@@ -41,20 +43,26 @@ class Login extends Component {
                         password: this.state.password,
                     };
 
-    Axios.post("https://tp2-backend-5e52.onrender.com/login", objetJSon).then((response) => {
-      if (response.data.message) {
+    Axios.post("http://localhost:3001/login", objetJSon).then((response) => {
+      if (response.data.message) 
+      {
         this.setLoginStatus(response.data.message);
-      } else {
-        this.setLoginStatus(response.data.user.username);
+      } 
+      else 
+      {
+        global.id = response.data.user.clientId;
+        localStorage.setItem("logged", "true");
+        window.location.href = "/";
       }
     });
   };
 
   // a tous les rafraichissement de page
   getLogin = () => {
-    Axios.get("https://tp2-backend-5e52.onrender.com/login").then((response) => {
+    Axios.get("http://localhost:3001/login").then((response) => {
+      console.log(response.data);
       if (response.data.loggedIn === true) {
-        this.setLoginStatus(response.data.user.username);
+        this.setLoginStatus(response.data.session.user.username);
       }
     });
   }
